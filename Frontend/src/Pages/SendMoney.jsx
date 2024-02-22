@@ -1,32 +1,35 @@
 import { Link, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { useRef, useState } from "react";
+import Backend_Url from "../../BackendUrl";
 
 const SendMoney = () => {
   const [searchParams] = useSearchParams();
   const name = searchParams.get("name")
   const id = searchParams.get("id");
-  let amount = useRef();
-
+  const [amount, setAmount] = useState();
   const [showMsg, setShowMsg] = useState(false);
 
   async function onInitateButtonHandler() {
-    amount = amount.current.value;
+    try {
 
-    const response = await axios.post("http://localhost:3004/api/v1/account/transfer", {
-      to: id,
-      amount
-    }, {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
+      const response = await axios.post(`${Backend_Url}/account/transfer`, {
+        to: id,
+        amount
+      }, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token")
+        }
+      })
+      if (response.data.message) {
+        setShowMsg(true)
+
+        setTimeout(() => {
+          setShowMsg(false)
+        }, 4000);
       }
-    })
-    if (response.data.message) {
-      setShowMsg(true)
-
-      setTimeout(() => {
-        setShowMsg(false)
-      }, 4000);
+    } catch (error) {
+      alert("amount should be less than your balance")
     }
 
   }
@@ -71,7 +74,7 @@ const SendMoney = () => {
                   </label>
                   <input
                     type="number"
-                    ref={amount}
+                    onChange={e => setAmount(e.target.value)}
                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                     id="amount"
                     placeholder="Enter amount"

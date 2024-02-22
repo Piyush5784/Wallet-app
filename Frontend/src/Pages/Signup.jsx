@@ -7,7 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import Label from "../components/Label";
-
+import Backend_Url from "../../BackendUrl";
 const Signup = () => {
   const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ const Signup = () => {
     password = password.current.value;
     firstname = firstname.current.value;
     const response = await axios.post(
-      "http://localhost:3004/api/v1/user/signup",
+      `${Backend_Url}/user/signup`,
       {
         username,
         firstname,

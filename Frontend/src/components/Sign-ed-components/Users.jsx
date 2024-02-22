@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 import { useEffect } from "react";
 import axios from "axios";
+import Backend_Url from "../../../BackendUrl";
 
 export const Users = () => {
   // Replace with backend call
@@ -12,7 +13,7 @@ export const Users = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3004/api/v1/user/bulk?filter=" + filter)
+      .get(`${Backend_Url}/user/bulk?filter=` + filter)
       .then((response) => {
         setUsers(response.data.user);
       });

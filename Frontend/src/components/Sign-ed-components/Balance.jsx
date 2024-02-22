@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Backend_Url from "../../../BackendUrl";
 export const Balance = () => {
 
   const [value, setValue] = useState()
@@ -7,13 +8,13 @@ export const Balance = () => {
   useEffect(() => {
     async function checkUser() {
       try {
-        const response = await axios.get("http://localhost:3004/api/v1/user/getMyInfo", {
+        const response = await axios.get(`${Backend_Url}/user/getMyInfo`, {
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("token"),
             "Content-Type": "application/json",
           }
         })
-        console.log(response)
+
         setValue(response.data.existingUser.balance)
       } catch (error) {
         console.log(error)
