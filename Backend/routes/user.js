@@ -26,9 +26,29 @@ const updateBody = zod.object({
 })
 
 
+router.get("/getMyinfo", authMiddleware, async (req, res) => {
+
+    const userId = req.userId;
+    try {
+        const existingUser = await Account.findOne({
+            userId
+        })
+
+        res.json({
+            existingUser
+        })
+    } catch (error) {
+        res.json({
+            message: "User not found"
+        })
+    }
+
+})
+
+
 router.post("/signup", async (req, res) => {
     const body = req.body;
-    console.log(body)
+
     try {
         const { success } = signupBody.safeParse(body);
         if (!success) {
@@ -75,6 +95,13 @@ router.post("/signup", async (req, res) => {
         })
     }
 })
+
+router.get("/me", authMiddleware, (req, res) => {
+    res.json({
+        message: "previously logged user found"
+    })
+})
+
 
 router.post("/signin", async (req, res) => {
     const body = req.body;

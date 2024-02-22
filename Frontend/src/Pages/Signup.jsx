@@ -5,16 +5,40 @@ import SubHeading from "../components/Subheading";
 import Button from "../components/Button";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Label from "../components/Label";
 
 const Signup = () => {
   const navigate = useNavigate();
 
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  let username = useRef();
+  let lastname = useRef();
+  let firstname = useRef();
+  let password = useRef();
+
+
+  async function onClickHandler() {
+    username = username.current.value;
+    lastname = lastname.current.value;
+    password = password.current.value;
+    firstname = firstname.current.value;
+    const response = await axios.post(
+      "http://localhost:3004/api/v1/user/signup",
+      {
+        username,
+        firstname,
+        lastname,
+        password,
+      }, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+    );
+    localStorage.setItem("token", response.data.token);
+    navigate("/dashboard");
+  }
+
 
   return (
     <div className="bg-slate-300 h-screen flex justify-center">
@@ -26,47 +50,35 @@ const Signup = () => {
           <Label label={"First Name"} />
           <input
             placeholder={"John"}
-            onChange={(e) => setFirstName(e.target.value)}
+            ref={firstname}
             className="w-full px-2 py-1 border rounded border-slate-200"
           />
 
           <Label label={"Last Name"} />
           <input
             placeholder={"Doe"}
-            onChange={(e) => setLastName(e.target.value)}
+            ref={lastname}
             className="w-full px-2 py-1 border rounded border-slate-200"
           />
 
           <Label label={"Email"} />
           <input
             placeholder={"piyushjha@gmail.com"}
-            onChange={(e) => setUsername(e.target.value)}
+            ref={username}
             className="w-full px-2 py-1 border rounded border-slate-200"
           />
 
           <Label label={"Password"} />
           <input
             placeholder={"123456789"}
-            onChange={(e) => setPassword(e.target.value)}
+            ref={password}
             className="w-full px-2 py-1 border rounded border-slate-200"
           />
 
           <div className="pt-4">
             <Button
               label={"Sign up"}
-              onClick={async () => {
-                const response = await axios.post(
-                  "http://localhost:3004/api/v1/user/signup",
-                  {
-                    username,
-                    firstname,
-                    lastname,
-                    password,
-                  },
-                );
-                localStorage.setItem("token", response.data.token);
-                navigate("/dashboard");
-              }}
+              onClick={() => onClickHandler()}
             />
           </div>
           <BottomWarning

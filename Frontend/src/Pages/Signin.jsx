@@ -3,7 +3,7 @@ import Heading from "../components/Heading";
 import Subheading from "../components/Subheading";
 import BottomWarning from "../components/BottomWarning";
 import Label from "../components/Label";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -27,12 +27,34 @@ const Signin = () => {
           },
         },
       );
+      console.log(response)
       localStorage.setItem("token", response.data.token);
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
     }
   }
+
+  useEffect(() => {
+    async function checkUser() {
+      try {
+
+        const response = await axios.get("http://localhost:3004/api/v1/user/me", {
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+            "Content-Type": "application/json",
+          }
+        })
+        if (response.data.message) {
+          navigate("/dashboard")
+        }
+
+      } catch (error) {
+
+      }
+    }
+    checkUser()
+  }, [])
 
   return (
     <div className="bg-slate-300 h-screen flex justify-center">
