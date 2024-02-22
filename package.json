@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "name": "paytm-clone",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "concurrently \"cd Backend && npx nodemon\" \"cd Frontend && npm run dev\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

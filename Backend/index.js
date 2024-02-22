@@ -4,12 +4,13 @@ const mongodbUrl = process.env.mongodbUrl;
 const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
-const PORT = process.env.PORT || 3004;
 
 app.use(cors());
 app.use(express.json());
 
+const PORT = process.env.PORT || 3004;
 const mainRouter = require("./routes/index")
+
 app.use("/api/v1", mainRouter)
 
 

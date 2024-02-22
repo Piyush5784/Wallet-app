@@ -28,6 +28,7 @@ const updateBody = zod.object({
 
 router.post("/signup", async (req, res) => {
     const body = req.body;
+    console.log(body)
     try {
         const { success } = signupBody.safeParse(body);
         if (!success) {
@@ -57,15 +58,15 @@ router.post("/signup", async (req, res) => {
         const userId = newUser._id;
         await Account.create({
             userId,
-            balance: Math.floor(1 + Math.random() * 1000)
+            balance: Math.floor(1 + Math.random() * 10000)
         })
 
-        // const token = jwt.sign({
-        //     userId
-        // }, JWT_SECRET)
+        const token = jwt.sign({
+            userId
+        }, JWT_SECRET)
 
-        return res.json({
-            message: "User created successfully"
+        res.json({
+            message: "User created successfully", token
         })
 
     } catch (error) {
@@ -104,13 +105,12 @@ router.post("/signin", async (req, res) => {
 
         const token = jwt.sign({ userId: existingUser._id }, JWT_SECRET)
 
-
-        return res.status(411).json({
+        res.status(200).json({
             message: "User logged in", token
         })
 
     } catch (error) {
-        return res.status(405).json({
+        res.status(405).json({
             message: "Something went wrong"
         })
     }
