@@ -42,7 +42,7 @@ https://github.com/Piyush5784/GYMER-version2/assets/105655779/0056207e-c427-4afd
 - #### created by [[Piyush](https://www.linkedin.com/in/piyush-kumar-jha-a29619239/)]
 
 ## 🔗 Links
-[![linkedin](https://www.linkedin.com/in/piyush-kumar-jha-a29619239/)
-[![twitter](https://twitter.com/Piyush5784)
+[![linkedin](https://www.linkedin.com/in/piyush-kumar-jha-a29619239/)]
+[![twitter](https://twitter.com/Piyush5784)]
 
 
