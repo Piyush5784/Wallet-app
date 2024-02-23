@@ -39,7 +39,7 @@ https://github.com/Piyush5784/GYMER-version2/assets/105655779/0056207e-c427-4afd
 - 🔹Axios for handling requests
 - 🔹Tailwind for Styling
 
-- #### created by [![Piyush](https://www.linkedin.com/in/piyush-kumar-jha-a29619239/)
+- #### created by [[Piyush](https://www.linkedin.com/in/piyush-kumar-jha-a29619239/)]
 
 ## 🔗 Links
 [![linkedin](https://www.linkedin.com/in/piyush-kumar-jha-a29619239/)
