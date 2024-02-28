@@ -8,37 +8,58 @@ import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import Label from "../components/Label";
 import Backend_Url from "../../BackendUrl";
+import { useForm } from "react-hook-form"
+
+
+// function App() {
+//   const {
+//     register,
+//     handleSubmit,
+//     formState: { errors },
+//   } = useForm();
+
+//   return (
+//     <form onSubmit={handleSubmit((data) => console.log(data))}>
+//       <input {...register('firstName')} />
+//       <input {...register('lastName', { required: true })} />
+//       {errors.lastName && <p>Last name is required.</p>}
+//       <input {...register('age', { pattern: /\d+/ })} />
+//       {errors.age && <p>Please enter number for age.</p>}
+//       <input type="submit" />
+//     </form>
+//   );
+// }
+
 const Signup = () => {
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+
   const navigate = useNavigate();
 
-  let username = useRef();
-  let lastname = useRef();
-  let firstname = useRef();
-  let password = useRef();
-
-
-  async function onClickHandler() {
-    username = username.current.value;
-    lastname = lastname.current.value;
-    password = password.current.value;
-    firstname = firstname.current.value;
-    const response = await axios.post(
-      `${Backend_Url}/user/signup`,
-      {
-        username,
-        firstname,
-        lastname,
-        password,
-      }, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    },
-    );
-    localStorage.setItem("token", response.data.token);
-    navigate("/dashboard");
+  async function onClickHandler(data) {
+    console.log(data)
+    console.log(errors)
+    // const response = await axios.post(
+    //   `${Backend_Url}/user/signup`,
+    //   {
+    //     username: data.username,
+    //     firstname: data.firstname,
+    //     lastname: data.lastname,
+    //     password: data.password,
+    //   }, {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // },
+    // );
+    // localStorage.setItem("token", response.data.token);
+    // navigate("/dashboard");
   }
-
 
   return (
     <div className="bg-slate-300 h-screen flex justify-center">
@@ -47,40 +68,53 @@ const Signup = () => {
           <Heading label={"Sign up"} />
           <SubHeading label={"Enter your infromation to create an account"} />
 
-          <Label label={"First Name"} />
-          <input
-            placeholder={"John"}
-            ref={firstname}
-            className="w-full px-2 py-1 border rounded border-slate-200"
-          />
+          <form onSubmit={handleSubmit(data => onClickHandler(data))}>
 
-          <Label label={"Last Name"} />
-          <input
-            placeholder={"Doe"}
-            ref={lastname}
-            className="w-full px-2 py-1 border rounded border-slate-200"
-          />
-
-          <Label label={"Email"} />
-          <input
-            placeholder={"piyushjha@gmail.com"}
-            ref={username}
-            className="w-full px-2 py-1 border rounded border-slate-200"
-          />
-
-          <Label label={"Password"} />
-          <input
-            placeholder={"123456789"}
-            ref={password}
-            className="w-full px-2 py-1 border rounded border-slate-200"
-          />
-
-          <div className="pt-4">
-            <Button
-              label={"Sign up"}
-              onClick={() => onClickHandler()}
+            <Label label={"First Name"} />
+            <input
+              placeholder={"John"}
+              {...register('firstname', { required: true })}
+              className="w-full px-2 py-1 border rounded border-slate-200"
             />
-          </div>
+            {errors.firstname && <p className="text-red-500 text-sm ">firstname is required</p>}
+
+            <Label label={"Last Name"} />
+            <input
+              placeholder={"Doe"}
+              {...register('lastname', { required: true })}
+              className="w-full px-2 py-1 border rounded border-slate-200"
+            />
+
+            {errors.lastname && <p className="text-red-500 text-sm ">lastname is required</p>}
+
+            <Label label={"Email"} />
+            <input
+              placeholder={"piyushjha@gmail.com"}
+              {...register('username', { required: true })}
+              className="w-full px-2 py-1 border rounded border-slate-200"
+            />
+            {errors.username && <p className="text-red-500 text-sm ">Email is required</p>}
+
+            <Label label={"Password"} />
+            <input
+              placeholder={"123456789"}
+              {...register('password', { required: true }, {
+                minLength: {
+                  value: 8
+                }
+              }
+              )}
+              className="w-full px-2 py-1 border rounded border-slate-200"
+            />
+
+            {errors.password && <p className="text-red-500 text-sm ">Password must be at least 8 characters</p>}
+
+
+            <div className="pt-4">
+              <button className=" w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2" type="submit">Sign up</button>
+            </div>
+          </form>
+
           <BottomWarning
             label={"Already have an account?"}
             buttonText={"Sign in"}
