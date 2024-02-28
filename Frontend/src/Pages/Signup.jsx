@@ -42,23 +42,21 @@ const Signup = () => {
   const navigate = useNavigate();
 
   async function onClickHandler(data) {
-    console.log(data)
-    console.log(errors)
-    // const response = await axios.post(
-    //   `${Backend_Url}/user/signup`,
-    //   {
-    //     username: data.username,
-    //     firstname: data.firstname,
-    //     lastname: data.lastname,
-    //     password: data.password,
-    //   }, {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // },
-    // );
-    // localStorage.setItem("token", response.data.token);
-    // navigate("/dashboard");
+    const response = await axios.post(
+      `${Backend_Url}/user/signup`,
+      {
+        username: data.username,
+        firstname: data.firstname,
+        lastname: data.lastname,
+        password: data.password,
+      }, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+    );
+    localStorage.setItem("token", response.data.token);
+    navigate("/dashboard");
   }
 
   return (
