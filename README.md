@@ -1,7 +1,7 @@
 
 # Paytm Clone
 
-Simple paytm app in which users can send and receive money 
+Simple wallet app in which users can send and receive money 
 
 
 ### Screensoft and Videos
